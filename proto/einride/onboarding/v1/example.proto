@@ -1,0 +1,8 @@
+syntax = "proto3";
+
+package einride.onboarding.v1;
+
+message ExampleMessage {
+  int32 id = 1;
+  string email = 2;
+}

@@ -43,9 +43,21 @@ update-sage: $(go)
 clean-sage:
 	@git clean -fdx ../.sage/tools ../.sage/bin ../.sage/build
 
+.PHONY: buf-generate
+buf-generate: $(sagefile)
+	@$(sagefile) Proto:BufGenerate
+
+.PHONY: buf-mod-format
+buf-mod-format: $(sagefile)
+	@$(sagefile) Proto:BufModFormat
+
 .PHONY: buf-mod-init
 buf-mod-init: $(sagefile)
 	@$(sagefile) Proto:BufModInit
+
+.PHONY: buf-mod-lint
+buf-mod-lint: $(sagefile)
+	@$(sagefile) Proto:BufModLint
 
 .PHONY: buf-mod-update
 buf-mod-update: $(sagefile)
@@ -54,3 +66,7 @@ buf-mod-update: $(sagefile)
 .PHONY: default
 default: $(sagefile)
 	@$(sagefile) Proto:Default
+
+.PHONY: protoc-gen-go
+protoc-gen-go: $(sagefile)
+	@$(sagefile) Proto:ProtocGenGo
