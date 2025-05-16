@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package einride.onboarding.v1;
+
+import "google/api/field_behavior.proto";
+
+// A shipment line item.
+message LineItem {
+  // The title of the line item.
+  string title = 1 [(google.api.field_behavior) = REQUIRED];
+  // The quantity of the line item.
+  float quantity = 2 [(google.api.field_behavior) = REQUIRED];
+  // The weight of the line item in kilograms.
+  float weight_kg = 3;
+  // The volume of the line item in cubic meters.
+  float volume_m3 = 4;
+}
