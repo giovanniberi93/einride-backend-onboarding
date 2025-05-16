@@ -70,3 +70,7 @@ default: $(sagefile)
 .PHONY: protoc-gen-go
 protoc-gen-go: $(sagefile)
 	@$(sagefile) Proto:ProtocGenGo
+
+.PHONY: protoc-gen-go-iam
+protoc-gen-go-iam: $(sagefile)
+	@$(sagefile) Proto:ProtocGenGoIAM

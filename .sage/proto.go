@@ -18,7 +18,12 @@ func (Proto) Default(ctx context.Context) error {
 }
 
 func (Proto) BufGenerate(ctx context.Context) error {
-	sg.Deps(ctx, Proto.ProtocGenGo, sgprotocgengogrpc.PrepareCommand)
+	sg.Deps(
+		ctx,
+		Proto.ProtocGenGo,
+		Proto.ProtocGenGoIAM,
+		sgprotocgengogrpc.PrepareCommand,
+	)
 	sg.Logger(ctx).Println("generating proto stubs...")
 	cmd := sgbuf.Command(ctx, "generate", "--output", sg.FromGitRoot(), "--template", "buf.gen.yaml", "--path", "einride")
 	cmd.Dir = sg.FromGitRoot("proto")
@@ -30,6 +35,16 @@ func (Proto) ProtocGenGo(ctx context.Context) error {
 	_, err := sgtool.GoInstallWithModfile(
 		ctx,
 		"google.golang.org/protobuf/cmd/protoc-gen-go",
+		sg.FromGitRoot("go.mod"),
+	)
+	return err
+}
+
+func (Proto) ProtocGenGoIAM(ctx context.Context) error {
+	sg.Logger(ctx).Println("building binary...")
+	_, err := sgtool.GoInstallWithModfile(
+		ctx,
+		"go.einride.tech/iam/cmd/protoc-gen-go-iam",
 		sg.FromGitRoot("go.mod"),
 	)
 	return err

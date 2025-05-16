@@ -3,6 +3,7 @@ version: v2
 
 deps:
   - buf.build/googleapis/googleapis
+  - buf.build/einride/iam
 lint:
   use:
     - STANDARD
