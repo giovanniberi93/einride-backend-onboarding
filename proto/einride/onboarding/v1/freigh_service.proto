@@ -10,6 +10,8 @@ import "google/api/annotations.proto";
 import "google/api/client.proto";
 import "google/api/field_behavior.proto";
 import "google/api/resource.proto";
+import "google/iam/v1/iam_policy.proto";
+import "google/iam/v1/policy.proto";
 import "google/protobuf/field_mask.proto";
 
 // This API represents a simple freight service.
@@ -50,6 +52,90 @@ service FreightService {
       included_permissions: "freight.shipments.list"
     }
   };
+
+  // Sets the access control policy on the specified shipper, site or shipment.
+  rpc SetIamPolicy(google.iam.v1.SetIamPolicyRequest) returns (google.iam.v1.Policy) {
+    option (google.api.http) = {
+      post: "/v1/{resource=**}:setIamPolicy"
+      body: "*"
+    };
+    option (google.api.method_signature) = "resource,policy";
+    option (einride.iam.v1.method_authorization) = {
+      resource_permissions: {
+        resource_permission: {
+          resource: {type: "/"}
+          permission: "freight.root.setIamPolicy"
+        }
+        resource_permission: {
+          resource: {type: "onboarding.einride.dev/Shipper"}
+          permission: "freight.shippers.setIamPolicy"
+        }
+        resource_permission: {
+          resource: {type: "onboarding.einride.dev/Site"}
+          permission: "freight.sites.setIamPolicy"
+        }
+        resource_permission: {
+          resource: {type: "onboarding.einride.dev/Shipment"}
+          permission: "freight.shipments.setIamPolicy"
+        }
+      }
+      before: {
+        expression: "test(caller, request.resource)"
+        description:
+          "The caller must have permission to get the resource's "
+          "IAM policy."
+      }
+    };
+  }
+
+  // Gets the access control policy for a shipper, site or shipment resource.
+  //
+  // Returns an empty policy if the resource exists and does not have a policy
+  // set.
+  rpc GetIamPolicy(google.iam.v1.GetIamPolicyRequest) returns (google.iam.v1.Policy) {
+    option (google.api.http) = {
+      post: "/v1/{resource=**}:getIamPolicy"
+      body: "*"
+    };
+    option (google.api.method_signature) = "resource";
+    option (einride.iam.v1.method_authorization) = {
+      resource_permissions: {
+        resource_permission: {
+          resource: {type: "/"}
+          permission: "freight.root.getIamPolicy"
+        }
+        resource_permission: {
+          resource: {type: "onboarding.einride.dev/Shipper"}
+          permission: "freight.shippers.getIamPolicy"
+        }
+        resource_permission: {
+          resource: {type: "onboarding.einride.dev/Site"}
+          permission: "freight.sites.getIamPolicy"
+        }
+        resource_permission: {
+          resource: {type: "onboarding.einride.dev/Shipment"}
+          permission: "freight.shipments.getIamPolicy"
+        }
+      }
+      before: {
+        expression: "test(caller, request.resource)"
+        description:
+          "The caller must have permission to get the resource's "
+          "IAM policy."
+      }
+    };
+  }
+
+  // Returns the permissions that a caller has on the specified shipper or
+  // site or shipment.
+  rpc TestIamPermissions(google.iam.v1.TestIamPermissionsRequest) returns (google.iam.v1.TestIamPermissionsResponse) {
+    option (google.api.http) = {
+      post: "/v1/{resource=**}:testIamPermissions"
+      body: "*"
+    };
+    option (google.api.method_signature) = "resource,permissions";
+    option (einride.iam.v1.method_authorization).none = true;
+  }
 
   // Get a shipper.
   // See: https://google.aip.dev/131 (Standard methods: Get).

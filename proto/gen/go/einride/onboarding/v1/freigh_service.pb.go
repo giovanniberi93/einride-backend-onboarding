@@ -9,6 +9,7 @@ package onboardingv1
 import (
 	_ "go.einride.tech/iam/proto/gen/einride/iam/v1"
 	_ "google.golang.org/genproto/googleapis/api/annotations"
+	v1 "google.golang.org/genproto/googleapis/iam/v1"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	fieldmaskpb "google.golang.org/protobuf/types/known/fieldmaskpb"
@@ -1110,7 +1111,7 @@ var File_einride_onboarding_v1_freigh_service_proto protoreflect.FileDescriptor
 
 const file_einride_onboarding_v1_freigh_service_proto_rawDesc = "" +
 	"\n" +
-	"*einride/onboarding/v1/freigh_service.proto\x12\x15einride.onboarding.v1\x1a einride/iam/v1/annotations.proto\x1a$einride/onboarding/v1/shipment.proto\x1a#einride/onboarding/v1/shipper.proto\x1a einride/onboarding/v1/site.proto\x1a\x1cgoogle/api/annotations.proto\x1a\x17google/api/client.proto\x1a\x1fgoogle/api/field_behavior.proto\x1a\x19google/api/resource.proto\x1a google/protobuf/field_mask.proto\"T\n" +
+	"*einride/onboarding/v1/freigh_service.proto\x12\x15einride.onboarding.v1\x1a einride/iam/v1/annotations.proto\x1a$einride/onboarding/v1/shipment.proto\x1a#einride/onboarding/v1/shipper.proto\x1a einride/onboarding/v1/site.proto\x1a\x1cgoogle/api/annotations.proto\x1a\x17google/api/client.proto\x1a\x1fgoogle/api/field_behavior.proto\x1a\x19google/api/resource.proto\x1a\x1egoogle/iam/v1/iam_policy.proto\x1a\x1agoogle/iam/v1/policy.proto\x1a google/protobuf/field_mask.proto\"T\n" +
 	"\x15DeleteShipmentRequest\x12;\n" +
 	"\x04name\x18\x01 \x01(\tB'\xe0A\x02\xfaA!\n" +
 	"\x1fonboarding.einride.dev/ShipmentR\x04name\"\x96\x01\n" +
@@ -1180,8 +1181,37 @@ const file_einride_onboarding_v1_freigh_service_proto_rawDesc = "" +
 	"updateMask\"R\n" +
 	"\x14DeleteShipperRequest\x12:\n" +
 	"\x04name\x18\x01 \x01(\tB&\xe0A\x02\xfaA \n" +
-	"\x1eonboarding.einride.dev/ShipperR\x04name2\xd2*\n" +
-	"\x0eFreightService\x12\xea\x01\n" +
+	"\x1eonboarding.einride.dev/ShipperR\x04name2\xc13\n" +
+	"\x0eFreightService\x12\xdb\x03\n" +
+	"\fSetIamPolicy\x12\".google.iam.v1.SetIamPolicyRequest\x1a\x15.google.iam.v1.Policy\"\x8f\x03\xdaA\x0fresource,policy\x82\xb8b\xcf\x02\x12\xe7\x01\n" +
+	" \n" +
+	"\x03\n" +
+	"\x01/\x12\x19freight.root.setIamPolicy\n" +
+	"A\n" +
+	" \n" +
+	"\x1eonboarding.einride.dev/Shipper\x12\x1dfreight.shippers.setIamPolicy\n" +
+	";\n" +
+	"\x1d\n" +
+	"\x1bonboarding.einride.dev/Site\x12\x1afreight.sites.setIamPolicy\n" +
+	"C\n" +
+	"!\n" +
+	"\x1fonboarding.einride.dev/Shipment\x12\x1efreight.shipments.setIamPolicy\x1ac\n" +
+	"\x1etest(caller, request.resource)\x1aAThe caller must have permission to get the resource's IAM policy.\x82\xd3\xe4\x93\x02#:\x01*\"\x1e/v1/{resource=**}:setIamPolicy\x12\xd4\x03\n" +
+	"\fGetIamPolicy\x12\".google.iam.v1.GetIamPolicyRequest\x1a\x15.google.iam.v1.Policy\"\x88\x03\xdaA\bresource\x82\xb8b\xcf\x02\x12\xe7\x01\n" +
+	" \n" +
+	"\x03\n" +
+	"\x01/\x12\x19freight.root.getIamPolicy\n" +
+	"A\n" +
+	" \n" +
+	"\x1eonboarding.einride.dev/Shipper\x12\x1dfreight.shippers.getIamPolicy\n" +
+	";\n" +
+	"\x1d\n" +
+	"\x1bonboarding.einride.dev/Site\x12\x1afreight.sites.getIamPolicy\n" +
+	"C\n" +
+	"!\n" +
+	"\x1fonboarding.einride.dev/Shipment\x12\x1efreight.shipments.getIamPolicy\x1ac\n" +
+	"\x1etest(caller, request.resource)\x1aAThe caller must have permission to get the resource's IAM policy.\x82\xd3\xe4\x93\x02#:\x01*\"\x1e/v1/{resource=**}:getIamPolicy\x12\xb7\x01\n" +
+	"\x12TestIamPermissions\x12(.google.iam.v1.TestIamPermissionsRequest\x1a).google.iam.v1.TestIamPermissionsResponse\"L\xdaA\x14resource,permissions\x82\xb8b\x020\x01\x82\xd3\xe4\x93\x02):\x01*\"$/v1/{resource=**}:testIamPermissions\x12\xea\x01\n" +
 	"\n" +
 	"GetShipper\x12(.einride.onboarding.v1.GetShipperRequest\x1a\x1e.einride.onboarding.v1.Shipper\"\x91\x01\xdaA\x04name\x82\xb8bi\n" +
 	"\x14freight.shippers.get\x1aQ\n" +
@@ -1255,30 +1285,35 @@ func file_einride_onboarding_v1_freigh_service_proto_rawDescGZIP() []byte {
 
 var file_einride_onboarding_v1_freigh_service_proto_msgTypes = make([]protoimpl.MessageInfo, 20)
 var file_einride_onboarding_v1_freigh_service_proto_goTypes = []any{
-	(*DeleteShipmentRequest)(nil), // 0: einride.onboarding.v1.DeleteShipmentRequest
-	(*UpdateShipmentRequest)(nil), // 1: einride.onboarding.v1.UpdateShipmentRequest
-	(*CreateShipmentRequest)(nil), // 2: einride.onboarding.v1.CreateShipmentRequest
-	(*ListShipmentsRequest)(nil),  // 3: einride.onboarding.v1.ListShipmentsRequest
-	(*ListShipmentsResponse)(nil), // 4: einride.onboarding.v1.ListShipmentsResponse
-	(*GetShipmentRequest)(nil),    // 5: einride.onboarding.v1.GetShipmentRequest
-	(*BatchGetSitesResponse)(nil), // 6: einride.onboarding.v1.BatchGetSitesResponse
-	(*BatchGetSitesRequest)(nil),  // 7: einride.onboarding.v1.BatchGetSitesRequest
-	(*DeleteSiteRequest)(nil),     // 8: einride.onboarding.v1.DeleteSiteRequest
-	(*UpdateSiteRequest)(nil),     // 9: einride.onboarding.v1.UpdateSiteRequest
-	(*CreateSiteRequest)(nil),     // 10: einride.onboarding.v1.CreateSiteRequest
-	(*ListSitesResponse)(nil),     // 11: einride.onboarding.v1.ListSitesResponse
-	(*ListSitesRequest)(nil),      // 12: einride.onboarding.v1.ListSitesRequest
-	(*GetSiteRequest)(nil),        // 13: einride.onboarding.v1.GetSiteRequest
-	(*GetShipperRequest)(nil),     // 14: einride.onboarding.v1.GetShipperRequest
-	(*ListShippersRequest)(nil),   // 15: einride.onboarding.v1.ListShippersRequest
-	(*ListShippersResponse)(nil),  // 16: einride.onboarding.v1.ListShippersResponse
-	(*CreateShipperRequest)(nil),  // 17: einride.onboarding.v1.CreateShipperRequest
-	(*UpdateShipperRequest)(nil),  // 18: einride.onboarding.v1.UpdateShipperRequest
-	(*DeleteShipperRequest)(nil),  // 19: einride.onboarding.v1.DeleteShipperRequest
-	(*Shipment)(nil),              // 20: einride.onboarding.v1.Shipment
-	(*fieldmaskpb.FieldMask)(nil), // 21: google.protobuf.FieldMask
-	(*Site)(nil),                  // 22: einride.onboarding.v1.Site
-	(*Shipper)(nil),               // 23: einride.onboarding.v1.Shipper
+	(*DeleteShipmentRequest)(nil),         // 0: einride.onboarding.v1.DeleteShipmentRequest
+	(*UpdateShipmentRequest)(nil),         // 1: einride.onboarding.v1.UpdateShipmentRequest
+	(*CreateShipmentRequest)(nil),         // 2: einride.onboarding.v1.CreateShipmentRequest
+	(*ListShipmentsRequest)(nil),          // 3: einride.onboarding.v1.ListShipmentsRequest
+	(*ListShipmentsResponse)(nil),         // 4: einride.onboarding.v1.ListShipmentsResponse
+	(*GetShipmentRequest)(nil),            // 5: einride.onboarding.v1.GetShipmentRequest
+	(*BatchGetSitesResponse)(nil),         // 6: einride.onboarding.v1.BatchGetSitesResponse
+	(*BatchGetSitesRequest)(nil),          // 7: einride.onboarding.v1.BatchGetSitesRequest
+	(*DeleteSiteRequest)(nil),             // 8: einride.onboarding.v1.DeleteSiteRequest
+	(*UpdateSiteRequest)(nil),             // 9: einride.onboarding.v1.UpdateSiteRequest
+	(*CreateSiteRequest)(nil),             // 10: einride.onboarding.v1.CreateSiteRequest
+	(*ListSitesResponse)(nil),             // 11: einride.onboarding.v1.ListSitesResponse
+	(*ListSitesRequest)(nil),              // 12: einride.onboarding.v1.ListSitesRequest
+	(*GetSiteRequest)(nil),                // 13: einride.onboarding.v1.GetSiteRequest
+	(*GetShipperRequest)(nil),             // 14: einride.onboarding.v1.GetShipperRequest
+	(*ListShippersRequest)(nil),           // 15: einride.onboarding.v1.ListShippersRequest
+	(*ListShippersResponse)(nil),          // 16: einride.onboarding.v1.ListShippersResponse
+	(*CreateShipperRequest)(nil),          // 17: einride.onboarding.v1.CreateShipperRequest
+	(*UpdateShipperRequest)(nil),          // 18: einride.onboarding.v1.UpdateShipperRequest
+	(*DeleteShipperRequest)(nil),          // 19: einride.onboarding.v1.DeleteShipperRequest
+	(*Shipment)(nil),                      // 20: einride.onboarding.v1.Shipment
+	(*fieldmaskpb.FieldMask)(nil),         // 21: google.protobuf.FieldMask
+	(*Site)(nil),                          // 22: einride.onboarding.v1.Site
+	(*Shipper)(nil),                       // 23: einride.onboarding.v1.Shipper
+	(*v1.SetIamPolicyRequest)(nil),        // 24: google.iam.v1.SetIamPolicyRequest
+	(*v1.GetIamPolicyRequest)(nil),        // 25: google.iam.v1.GetIamPolicyRequest
+	(*v1.TestIamPermissionsRequest)(nil),  // 26: google.iam.v1.TestIamPermissionsRequest
+	(*v1.Policy)(nil),                     // 27: google.iam.v1.Policy
+	(*v1.TestIamPermissionsResponse)(nil), // 28: google.iam.v1.TestIamPermissionsResponse
 }
 var file_einride_onboarding_v1_freigh_service_proto_depIdxs = []int32{
 	20, // 0: einride.onboarding.v1.UpdateShipmentRequest.shipment:type_name -> einride.onboarding.v1.Shipment
@@ -1294,40 +1329,46 @@ var file_einride_onboarding_v1_freigh_service_proto_depIdxs = []int32{
 	23, // 10: einride.onboarding.v1.CreateShipperRequest.shipper:type_name -> einride.onboarding.v1.Shipper
 	23, // 11: einride.onboarding.v1.UpdateShipperRequest.shipper:type_name -> einride.onboarding.v1.Shipper
 	21, // 12: einride.onboarding.v1.UpdateShipperRequest.update_mask:type_name -> google.protobuf.FieldMask
-	14, // 13: einride.onboarding.v1.FreightService.GetShipper:input_type -> einride.onboarding.v1.GetShipperRequest
-	15, // 14: einride.onboarding.v1.FreightService.ListShippers:input_type -> einride.onboarding.v1.ListShippersRequest
-	17, // 15: einride.onboarding.v1.FreightService.CreateShipper:input_type -> einride.onboarding.v1.CreateShipperRequest
-	18, // 16: einride.onboarding.v1.FreightService.UpdateShipper:input_type -> einride.onboarding.v1.UpdateShipperRequest
-	19, // 17: einride.onboarding.v1.FreightService.DeleteShipper:input_type -> einride.onboarding.v1.DeleteShipperRequest
-	13, // 18: einride.onboarding.v1.FreightService.GetSite:input_type -> einride.onboarding.v1.GetSiteRequest
-	12, // 19: einride.onboarding.v1.FreightService.ListSites:input_type -> einride.onboarding.v1.ListSitesRequest
-	10, // 20: einride.onboarding.v1.FreightService.CreateSite:input_type -> einride.onboarding.v1.CreateSiteRequest
-	9,  // 21: einride.onboarding.v1.FreightService.UpdateSite:input_type -> einride.onboarding.v1.UpdateSiteRequest
-	8,  // 22: einride.onboarding.v1.FreightService.DeleteSite:input_type -> einride.onboarding.v1.DeleteSiteRequest
-	7,  // 23: einride.onboarding.v1.FreightService.BatchGetSites:input_type -> einride.onboarding.v1.BatchGetSitesRequest
-	5,  // 24: einride.onboarding.v1.FreightService.GetShipment:input_type -> einride.onboarding.v1.GetShipmentRequest
-	3,  // 25: einride.onboarding.v1.FreightService.ListShipments:input_type -> einride.onboarding.v1.ListShipmentsRequest
-	2,  // 26: einride.onboarding.v1.FreightService.CreateShipment:input_type -> einride.onboarding.v1.CreateShipmentRequest
-	1,  // 27: einride.onboarding.v1.FreightService.UpdateShipment:input_type -> einride.onboarding.v1.UpdateShipmentRequest
-	0,  // 28: einride.onboarding.v1.FreightService.DeleteShipment:input_type -> einride.onboarding.v1.DeleteShipmentRequest
-	23, // 29: einride.onboarding.v1.FreightService.GetShipper:output_type -> einride.onboarding.v1.Shipper
-	16, // 30: einride.onboarding.v1.FreightService.ListShippers:output_type -> einride.onboarding.v1.ListShippersResponse
-	23, // 31: einride.onboarding.v1.FreightService.CreateShipper:output_type -> einride.onboarding.v1.Shipper
-	23, // 32: einride.onboarding.v1.FreightService.UpdateShipper:output_type -> einride.onboarding.v1.Shipper
-	23, // 33: einride.onboarding.v1.FreightService.DeleteShipper:output_type -> einride.onboarding.v1.Shipper
-	22, // 34: einride.onboarding.v1.FreightService.GetSite:output_type -> einride.onboarding.v1.Site
-	11, // 35: einride.onboarding.v1.FreightService.ListSites:output_type -> einride.onboarding.v1.ListSitesResponse
-	22, // 36: einride.onboarding.v1.FreightService.CreateSite:output_type -> einride.onboarding.v1.Site
-	22, // 37: einride.onboarding.v1.FreightService.UpdateSite:output_type -> einride.onboarding.v1.Site
-	22, // 38: einride.onboarding.v1.FreightService.DeleteSite:output_type -> einride.onboarding.v1.Site
-	6,  // 39: einride.onboarding.v1.FreightService.BatchGetSites:output_type -> einride.onboarding.v1.BatchGetSitesResponse
-	20, // 40: einride.onboarding.v1.FreightService.GetShipment:output_type -> einride.onboarding.v1.Shipment
-	4,  // 41: einride.onboarding.v1.FreightService.ListShipments:output_type -> einride.onboarding.v1.ListShipmentsResponse
-	20, // 42: einride.onboarding.v1.FreightService.CreateShipment:output_type -> einride.onboarding.v1.Shipment
-	20, // 43: einride.onboarding.v1.FreightService.UpdateShipment:output_type -> einride.onboarding.v1.Shipment
-	20, // 44: einride.onboarding.v1.FreightService.DeleteShipment:output_type -> einride.onboarding.v1.Shipment
-	29, // [29:45] is the sub-list for method output_type
-	13, // [13:29] is the sub-list for method input_type
+	24, // 13: einride.onboarding.v1.FreightService.SetIamPolicy:input_type -> google.iam.v1.SetIamPolicyRequest
+	25, // 14: einride.onboarding.v1.FreightService.GetIamPolicy:input_type -> google.iam.v1.GetIamPolicyRequest
+	26, // 15: einride.onboarding.v1.FreightService.TestIamPermissions:input_type -> google.iam.v1.TestIamPermissionsRequest
+	14, // 16: einride.onboarding.v1.FreightService.GetShipper:input_type -> einride.onboarding.v1.GetShipperRequest
+	15, // 17: einride.onboarding.v1.FreightService.ListShippers:input_type -> einride.onboarding.v1.ListShippersRequest
+	17, // 18: einride.onboarding.v1.FreightService.CreateShipper:input_type -> einride.onboarding.v1.CreateShipperRequest
+	18, // 19: einride.onboarding.v1.FreightService.UpdateShipper:input_type -> einride.onboarding.v1.UpdateShipperRequest
+	19, // 20: einride.onboarding.v1.FreightService.DeleteShipper:input_type -> einride.onboarding.v1.DeleteShipperRequest
+	13, // 21: einride.onboarding.v1.FreightService.GetSite:input_type -> einride.onboarding.v1.GetSiteRequest
+	12, // 22: einride.onboarding.v1.FreightService.ListSites:input_type -> einride.onboarding.v1.ListSitesRequest
+	10, // 23: einride.onboarding.v1.FreightService.CreateSite:input_type -> einride.onboarding.v1.CreateSiteRequest
+	9,  // 24: einride.onboarding.v1.FreightService.UpdateSite:input_type -> einride.onboarding.v1.UpdateSiteRequest
+	8,  // 25: einride.onboarding.v1.FreightService.DeleteSite:input_type -> einride.onboarding.v1.DeleteSiteRequest
+	7,  // 26: einride.onboarding.v1.FreightService.BatchGetSites:input_type -> einride.onboarding.v1.BatchGetSitesRequest
+	5,  // 27: einride.onboarding.v1.FreightService.GetShipment:input_type -> einride.onboarding.v1.GetShipmentRequest
+	3,  // 28: einride.onboarding.v1.FreightService.ListShipments:input_type -> einride.onboarding.v1.ListShipmentsRequest
+	2,  // 29: einride.onboarding.v1.FreightService.CreateShipment:input_type -> einride.onboarding.v1.CreateShipmentRequest
+	1,  // 30: einride.onboarding.v1.FreightService.UpdateShipment:input_type -> einride.onboarding.v1.UpdateShipmentRequest
+	0,  // 31: einride.onboarding.v1.FreightService.DeleteShipment:input_type -> einride.onboarding.v1.DeleteShipmentRequest
+	27, // 32: einride.onboarding.v1.FreightService.SetIamPolicy:output_type -> google.iam.v1.Policy
+	27, // 33: einride.onboarding.v1.FreightService.GetIamPolicy:output_type -> google.iam.v1.Policy
+	28, // 34: einride.onboarding.v1.FreightService.TestIamPermissions:output_type -> google.iam.v1.TestIamPermissionsResponse
+	23, // 35: einride.onboarding.v1.FreightService.GetShipper:output_type -> einride.onboarding.v1.Shipper
+	16, // 36: einride.onboarding.v1.FreightService.ListShippers:output_type -> einride.onboarding.v1.ListShippersResponse
+	23, // 37: einride.onboarding.v1.FreightService.CreateShipper:output_type -> einride.onboarding.v1.Shipper
+	23, // 38: einride.onboarding.v1.FreightService.UpdateShipper:output_type -> einride.onboarding.v1.Shipper
+	23, // 39: einride.onboarding.v1.FreightService.DeleteShipper:output_type -> einride.onboarding.v1.Shipper
+	22, // 40: einride.onboarding.v1.FreightService.GetSite:output_type -> einride.onboarding.v1.Site
+	11, // 41: einride.onboarding.v1.FreightService.ListSites:output_type -> einride.onboarding.v1.ListSitesResponse
+	22, // 42: einride.onboarding.v1.FreightService.CreateSite:output_type -> einride.onboarding.v1.Site
+	22, // 43: einride.onboarding.v1.FreightService.UpdateSite:output_type -> einride.onboarding.v1.Site
+	22, // 44: einride.onboarding.v1.FreightService.DeleteSite:output_type -> einride.onboarding.v1.Site
+	6,  // 45: einride.onboarding.v1.FreightService.BatchGetSites:output_type -> einride.onboarding.v1.BatchGetSitesResponse
+	20, // 46: einride.onboarding.v1.FreightService.GetShipment:output_type -> einride.onboarding.v1.Shipment
+	4,  // 47: einride.onboarding.v1.FreightService.ListShipments:output_type -> einride.onboarding.v1.ListShipmentsResponse
+	20, // 48: einride.onboarding.v1.FreightService.CreateShipment:output_type -> einride.onboarding.v1.Shipment
+	20, // 49: einride.onboarding.v1.FreightService.UpdateShipment:output_type -> einride.onboarding.v1.Shipment
+	20, // 50: einride.onboarding.v1.FreightService.DeleteShipment:output_type -> einride.onboarding.v1.Shipment
+	32, // [32:51] is the sub-list for method output_type
+	13, // [13:32] is the sub-list for method input_type
 	13, // [13:13] is the sub-list for extension type_name
 	13, // [13:13] is the sub-list for extension extendee
 	0,  // [0:13] is the sub-list for field type_name

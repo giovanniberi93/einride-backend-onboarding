@@ -6,6 +6,7 @@ managed:
     default: github.com/giovanniberi93/einride-backend-onboarding/proto/gen/go
     except:
       - buf.build/googleapis/googleapis
+      - buf.build/einride/googleapis
     override:
       buf.build/einride/iam: go.einride.tech/iam/proto/gen
 
