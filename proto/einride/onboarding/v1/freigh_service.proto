@@ -2,6 +2,7 @@ syntax = "proto3";
 
 package einride.onboarding.v1;
 
+import "einride/iam/v1/annotations.proto";
 import "einride/onboarding/v1/shipment.proto";
 import "einride/onboarding/v1/shipper.proto";
 import "einride/onboarding/v1/site.proto";
@@ -13,17 +14,68 @@ import "google/protobuf/field_mask.proto";
 
 // This API represents a simple freight service.
 service FreightService {
+  option (einride.iam.v1.predefined_roles) = {
+    role: {
+      name: "roles/freight.admin"
+      title: "Freight Admin"
+      description: "Full admin permissions to freight."
+      included_permissions: "freight.*"
+    }
+    role: {
+      name: "roles/freight.editor"
+      title: "Freight Editor"
+      description: "Edit permissions to freight."
+      included_permissions: "freight.shippers.get"
+      included_permissions: "freight.shippers.update"
+      included_permissions: "freight.sites.get"
+      included_permissions: "freight.sites.list"
+      included_permissions: "freight.sites.create"
+      included_permissions: "freight.sites.update"
+      included_permissions: "freight.sites.delete"
+      included_permissions: "freight.shipments.get"
+      included_permissions: "freight.shipments.list"
+      included_permissions: "freight.shipments.create"
+      included_permissions: "freight.shipments.update"
+      included_permissions: "freight.shipments.delete"
+    }
+    role: {
+      name: "roles/freight.viewer"
+      title: "Freight Viewer"
+      description: "View permissions to freight."
+      included_permissions: "freight.shippers.get"
+      included_permissions: "freight.shippers.list"
+      included_permissions: "freight.sites.get"
+      included_permissions: "freight.sites.list"
+      included_permissions: "freight.shipments.get"
+      included_permissions: "freight.shipments.list"
+    }
+  };
+
   // Get a shipper.
   // See: https://google.aip.dev/131 (Standard methods: Get).
   rpc GetShipper(GetShipperRequest) returns (Shipper) {
     option (google.api.http) = {get: "/v1/{name=shippers/*}"};
     option (google.api.method_signature) = "name";
+    option (einride.iam.v1.method_authorization) = {
+      permission: "freight.shippers.get"
+      before: {
+        expression: "test(caller, request.name)"
+        description: "The caller must have permission to get the shipper."
+      }
+    };
   }
 
   // List shippers.
   // See: https://google.aip.dev/132 (Standard methods: List).
   rpc ListShippers(ListShippersRequest) returns (ListShippersResponse) {
     option (google.api.http) = {get: "/v1/shippers"};
+    option (einride.iam.v1.method_authorization) = {
+      permission: "freight.shippers.list"
+      before: {
+        expression: "test(caller, '/')"
+        description: "The caller must have permission to list all shippers."
+      }
+    };
   }
 
   // Create a shipper.
@@ -33,7 +85,14 @@ service FreightService {
       post: "/v1/shippers"
       body: "shipper"
     };
-    option (google.api.method_signature) = "shipper";
+    option (google.api.method_signature) = "shipper,shipper_id";
+    option (einride.iam.v1.method_authorization) = {
+      permission: "freight.shippers.create"
+      before: {
+        expression: "test(caller, '/')"
+        description: "The caller must have permission to create new shippers."
+      }
+    };
   }
 
   // Update a shipper.
@@ -44,6 +103,13 @@ service FreightService {
       body: "shipper"
     };
     option (google.api.method_signature) = "shipper,update_mask";
+    option (einride.iam.v1.method_authorization) = {
+      permission: "freight.shippers.update"
+      before: {
+        expression: "test(caller, request.shipper.name)"
+        description: "The caller must have permission to update the shipper."
+      }
+    };
   }
 
   // Delete a shipper.
@@ -52,6 +118,13 @@ service FreightService {
   rpc DeleteShipper(DeleteShipperRequest) returns (Shipper) {
     option (google.api.http) = {delete: "/v1/{name=shippers/*}"};
     option (google.api.method_signature) = "name";
+    option (einride.iam.v1.method_authorization) = {
+      permission: "freight.shippers.delete"
+      before: {
+        expression: "test(caller, request.name)"
+        description: "The caller must have permission to delete the shipper."
+      }
+    };
   }
 
   // Get a site.
@@ -59,6 +132,13 @@ service FreightService {
   rpc GetSite(GetSiteRequest) returns (Site) {
     option (google.api.http) = {get: "/v1/{name=shippers/*/sites/*}"};
     option (google.api.method_signature) = "name";
+    option (einride.iam.v1.method_authorization) = {
+      permission: "freight.sites.get"
+      before: {
+        expression: "test(caller, request.name)"
+        description: "The caller must have permission to get the site."
+      }
+    };
   }
 
   // List sites for a shipper.
@@ -66,6 +146,15 @@ service FreightService {
   rpc ListSites(ListSitesRequest) returns (ListSitesResponse) {
     option (google.api.http) = {get: "/v1/{parent=shippers/*}/sites"};
     option (google.api.method_signature) = "parent";
+    option (einride.iam.v1.method_authorization) = {
+      permission: "freight.sites.list"
+      before: {
+        expression: "test(caller, request.parent)"
+        description:
+          "The caller must have permission to list all sites under "
+          "the parent shipper."
+      }
+    };
   }
 
   // Create a site.
@@ -76,6 +165,15 @@ service FreightService {
       body: "site"
     };
     option (google.api.method_signature) = "parent,site";
+    option (einride.iam.v1.method_authorization) = {
+      permission: "freight.sites.create"
+      before: {
+        expression: "test(caller, request.parent)"
+        description:
+          "The caller must have permission to create new sites "
+          "under the parent shipper."
+      }
+    };
   }
 
   // Update a site.
@@ -86,6 +184,13 @@ service FreightService {
       body: "site"
     };
     option (google.api.method_signature) = "site,update_mask";
+    option (einride.iam.v1.method_authorization) = {
+      permission: "freight.sites.update"
+      before: {
+        expression: "test(caller, request.site.name)"
+        description: "The caller must have permission to update the site."
+      }
+    };
   }
 
   // Delete a site.
@@ -94,12 +199,32 @@ service FreightService {
   rpc DeleteSite(DeleteSiteRequest) returns (Site) {
     option (google.api.http) = {delete: "/v1/{name=shippers/*/sites/*}"};
     option (google.api.method_signature) = "name";
+    option (einride.iam.v1.method_authorization) = {
+      permission: "freight.sites.delete"
+      before: {
+        expression: "test(caller, request.name)"
+        description: "The caller must have permission to delete the site."
+      }
+    };
   }
 
   // Batch get sites.
   // See: https://google.aip.dev/231 (Batch methods: Get).
   rpc BatchGetSites(BatchGetSitesRequest) returns (BatchGetSitesResponse) {
     option (google.api.http) = {get: "/v1/{parent=shippers/*}/sites:batchGet"};
+    option (einride.iam.v1.method_authorization) = {
+      permission: "freight.sites.get"
+      before: {
+        expression:
+          "test(caller, request.parent) || test_all(caller, "
+          "request.names)"
+        description:
+          "The caller must have permission to get all sites under "
+          "the parent shipper"
+          ", or the caller must have permission to get each of the "
+          "requested sites."
+      }
+    };
   }
 
   // Get a shipment.
@@ -107,12 +232,36 @@ service FreightService {
   rpc GetShipment(GetShipmentRequest) returns (Shipment) {
     option (google.api.http) = {get: "/v1/{name=shippers/*/shipments/*}"};
     option (google.api.method_signature) = "name";
+    option (einride.iam.v1.method_authorization) = {
+      permission: "freight.shipments.get"
+      after: {
+        expression:
+          "test_any(caller, [request.name, response.origin_site, "
+          "response.destination_site])"
+        description:
+          "The caller must have permission to get the shipment"
+          ", or the caller must have permission to get shipments "
+          "from the shipment's origin site"
+          ", or the caller must have permission to get shipments "
+          "to the shipment's destination site."
+      }
+    };
   }
+
   // List shipments for a shipper.
   // See: https://google.aip.dev/132 (Standard methods: List).
   rpc ListShipments(ListShipmentsRequest) returns (ListShipmentsResponse) {
     option (google.api.http) = {get: "/v1/{parent=shippers/*}/shipments"};
     option (google.api.method_signature) = "parent";
+    option (einride.iam.v1.method_authorization) = {
+      permission: "freight.shipments.list"
+      before: {
+        expression: "test(caller, request.parent)"
+        description:
+          "The caller must have permission to list all shipments "
+          "under the parent shipper."
+      }
+    };
   }
 
   // Create a shipment.
@@ -123,6 +272,22 @@ service FreightService {
       body: "shipment"
     };
     option (google.api.method_signature) = "parent,shipment";
+    option (einride.iam.v1.method_authorization) = {
+      permission: "freight.shipments.create"
+      before: {
+        expression:
+          "test_any(caller, [request.parent, "
+          "request.shipment.origin_site, "
+          "request.shipment.destination_site])"
+        description:
+          "The caller must have permission to create shipments "
+          "under the parent shipper"
+          ", or the caller must have permission to create "
+          "shipments from the shipment's origin site"
+          ", or the caller must have permission to create "
+          "shipments to the shipment's destination site."
+      }
+    };
   }
 
   // Update a shipment.
@@ -133,6 +298,12 @@ service FreightService {
       body: "shipment"
     };
     option (google.api.method_signature) = "shipment,update_mask";
+    option (einride.iam.v1.method_authorization) = {
+      permission: "freight.shipments.update"
+      // Must read existing shipment during authorization to check
+      // origin/destination site.
+      custom: true
+    };
   }
 
   // Delete a shipment.
@@ -141,6 +312,13 @@ service FreightService {
   rpc DeleteShipment(DeleteShipmentRequest) returns (Shipment) {
     option (google.api.http) = {delete: "/v1/{name=shippers/*/shipments/*}"};
     option (google.api.method_signature) = "name";
+    option (einride.iam.v1.method_authorization) = {
+      permission: "freight.shipments.delete"
+      before: {
+        expression: "test(caller, request.name)"
+        description: "The caller must have permission to delete the shipment."
+      }
+    };
   }
 }
 

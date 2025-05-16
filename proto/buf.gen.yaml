@@ -22,4 +22,4 @@ plugins:
 
   - name: go-iam
     out: proto/gen/go
-    opt: module=github.com/odsod/einride-backend-onboarding/proto/gen/go
+    opt: module=github.com/giovanniberi93/einride-backend-onboarding/proto/gen/go

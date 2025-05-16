@@ -7,6 +7,7 @@
 package onboardingv1
 
 import (
+	_ "go.einride.tech/iam/proto/gen/einride/iam/v1"
 	_ "google.golang.org/genproto/googleapis/api/annotations"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
@@ -1109,7 +1110,7 @@ var File_einride_onboarding_v1_freigh_service_proto protoreflect.FileDescriptor
 
 const file_einride_onboarding_v1_freigh_service_proto_rawDesc = "" +
 	"\n" +
-	"*einride/onboarding/v1/freigh_service.proto\x12\x15einride.onboarding.v1\x1a$einride/onboarding/v1/shipment.proto\x1a#einride/onboarding/v1/shipper.proto\x1a einride/onboarding/v1/site.proto\x1a\x1cgoogle/api/annotations.proto\x1a\x17google/api/client.proto\x1a\x1fgoogle/api/field_behavior.proto\x1a\x19google/api/resource.proto\x1a google/protobuf/field_mask.proto\"T\n" +
+	"*einride/onboarding/v1/freigh_service.proto\x12\x15einride.onboarding.v1\x1a einride/iam/v1/annotations.proto\x1a$einride/onboarding/v1/shipment.proto\x1a#einride/onboarding/v1/shipper.proto\x1a einride/onboarding/v1/site.proto\x1a\x1cgoogle/api/annotations.proto\x1a\x17google/api/client.proto\x1a\x1fgoogle/api/field_behavior.proto\x1a\x19google/api/resource.proto\x1a google/protobuf/field_mask.proto\"T\n" +
 	"\x15DeleteShipmentRequest\x12;\n" +
 	"\x04name\x18\x01 \x01(\tB'\xe0A\x02\xfaA!\n" +
 	"\x1fonboarding.einride.dev/ShipmentR\x04name\"\x96\x01\n" +
@@ -1179,28 +1180,65 @@ const file_einride_onboarding_v1_freigh_service_proto_rawDesc = "" +
 	"updateMask\"R\n" +
 	"\x14DeleteShipperRequest\x12:\n" +
 	"\x04name\x18\x01 \x01(\tB&\xe0A\x02\xfaA \n" +
-	"\x1eonboarding.einride.dev/ShipperR\x04name2\xbd\x12\n" +
-	"\x0eFreightService\x12|\n" +
+	"\x1eonboarding.einride.dev/ShipperR\x04name2\xd2*\n" +
+	"\x0eFreightService\x12\xea\x01\n" +
 	"\n" +
-	"GetShipper\x12(.einride.onboarding.v1.GetShipperRequest\x1a\x1e.einride.onboarding.v1.Shipper\"$\xdaA\x04name\x82\xd3\xe4\x93\x02\x17\x12\x15/v1/{name=shippers/*}\x12}\n" +
-	"\fListShippers\x12*.einride.onboarding.v1.ListShippersRequest\x1a+.einride.onboarding.v1.ListShippersResponse\"\x14\x82\xd3\xe4\x93\x02\x0e\x12\f/v1/shippers\x12\x85\x01\n" +
-	"\rCreateShipper\x12+.einride.onboarding.v1.CreateShipperRequest\x1a\x1e.einride.onboarding.v1.Shipper\"'\xdaA\ashipper\x82\xd3\xe4\x93\x02\x17:\ashipper\"\f/v1/shippers\x12\xa2\x01\n" +
-	"\rUpdateShipper\x12+.einride.onboarding.v1.UpdateShipperRequest\x1a\x1e.einride.onboarding.v1.Shipper\"D\xdaA\x13shipper,update_mask\x82\xd3\xe4\x93\x02(:\ashipper2\x1d/v1/{shipper.name=shippers/*}\x12\x82\x01\n" +
-	"\rDeleteShipper\x12+.einride.onboarding.v1.DeleteShipperRequest\x1a\x1e.einride.onboarding.v1.Shipper\"$\xdaA\x04name\x82\xd3\xe4\x93\x02\x17*\x15/v1/{name=shippers/*}\x12{\n" +
-	"\aGetSite\x12%.einride.onboarding.v1.GetSiteRequest\x1a\x1b.einride.onboarding.v1.Site\",\xdaA\x04name\x82\xd3\xe4\x93\x02\x1f\x12\x1d/v1/{name=shippers/*/sites/*}\x12\x8e\x01\n" +
-	"\tListSites\x12'.einride.onboarding.v1.ListSitesRequest\x1a(.einride.onboarding.v1.ListSitesResponse\".\xdaA\x06parent\x82\xd3\xe4\x93\x02\x1f\x12\x1d/v1/{parent=shippers/*}/sites\x12\x8e\x01\n" +
+	"GetShipper\x12(.einride.onboarding.v1.GetShipperRequest\x1a\x1e.einride.onboarding.v1.Shipper\"\x91\x01\xdaA\x04name\x82\xb8bi\n" +
+	"\x14freight.shippers.get\x1aQ\n" +
+	"\x1atest(caller, request.name)\x1a3The caller must have permission to get the shipper.\x82\xd3\xe4\x93\x02\x17\x12\x15/v1/{name=shippers/*}\x12\xe4\x01\n" +
+	"\fListShippers\x12*.einride.onboarding.v1.ListShippersRequest\x1a+.einride.onboarding.v1.ListShippersResponse\"{\x82\xb8bc\n" +
+	"\x15freight.shippers.list\x1aJ\n" +
+	"\x11test(caller, '/')\x1a5The caller must have permission to list all shippers.\x82\xd3\xe4\x93\x02\x0e\x12\f/v1/shippers\x12\xfc\x01\n" +
+	"\rCreateShipper\x12+.einride.onboarding.v1.CreateShipperRequest\x1a\x1e.einride.onboarding.v1.Shipper\"\x9d\x01\xdaA\x12shipper,shipper_id\x82\xb8bg\n" +
+	"\x17freight.shippers.create\x1aL\n" +
+	"\x11test(caller, '/')\x1a7The caller must have permission to create new shippers.\x82\xd3\xe4\x93\x02\x17:\ashipper\"\f/v1/shippers\x12\x9e\x02\n" +
+	"\rUpdateShipper\x12+.einride.onboarding.v1.UpdateShipperRequest\x1a\x1e.einride.onboarding.v1.Shipper\"\xbf\x01\xdaA\x13shipper,update_mask\x82\xb8bw\n" +
+	"\x17freight.shippers.update\x1a\\\n" +
+	"\"test(caller, request.shipper.name)\x1a6The caller must have permission to update the shipper.\x82\xd3\xe4\x93\x02(:\ashipper2\x1d/v1/{shipper.name=shippers/*}\x12\xf6\x01\n" +
+	"\rDeleteShipper\x12+.einride.onboarding.v1.DeleteShipperRequest\x1a\x1e.einride.onboarding.v1.Shipper\"\x97\x01\xdaA\x04name\x82\xb8bo\n" +
+	"\x17freight.shippers.delete\x1aT\n" +
+	"\x1atest(caller, request.name)\x1a6The caller must have permission to delete the shipper.\x82\xd3\xe4\x93\x02\x17*\x15/v1/{name=shippers/*}\x12\xe3\x01\n" +
+	"\aGetSite\x12%.einride.onboarding.v1.GetSiteRequest\x1a\x1b.einride.onboarding.v1.Site\"\x93\x01\xdaA\x04name\x82\xb8bc\n" +
+	"\x11freight.sites.get\x1aN\n" +
+	"\x1atest(caller, request.name)\x1a0The caller must have permission to get the site.\x82\xd3\xe4\x93\x02\x1f\x12\x1d/v1/{name=shippers/*/sites/*}\x12\x95\x02\n" +
+	"\tListSites\x12'.einride.onboarding.v1.ListSitesRequest\x1a(.einride.onboarding.v1.ListSitesResponse\"\xb4\x01\xdaA\x06parent\x82\xb8b\x81\x01\n" +
+	"\x12freight.sites.list\x1ak\n" +
+	"\x1ctest(caller, request.parent)\x1aKThe caller must have permission to list all sites under the parent shipper.\x82\xd3\xe4\x93\x02\x1f\x12\x1d/v1/{parent=shippers/*}/sites\x12\x99\x02\n" +
 	"\n" +
-	"CreateSite\x12(.einride.onboarding.v1.CreateSiteRequest\x1a\x1b.einride.onboarding.v1.Site\"9\xdaA\vparent,site\x82\xd3\xe4\x93\x02%:\x04site\"\x1d/v1/{parent=shippers/*}/sites\x12\x98\x01\n" +
+	"CreateSite\x12(.einride.onboarding.v1.CreateSiteRequest\x1a\x1b.einride.onboarding.v1.Site\"\xc3\x01\xdaA\vparent,site\x82\xb8b\x85\x01\n" +
+	"\x14freight.sites.create\x1am\n" +
+	"\x1ctest(caller, request.parent)\x1aMThe caller must have permission to create new sites under the parent shipper.\x82\xd3\xe4\x93\x02%:\x04site\"\x1d/v1/{parent=shippers/*}/sites\x12\x8b\x02\n" +
 	"\n" +
-	"UpdateSite\x12(.einride.onboarding.v1.UpdateSiteRequest\x1a\x1b.einride.onboarding.v1.Site\"C\xdaA\x10site,update_mask\x82\xd3\xe4\x93\x02*:\x04site2\"/v1/{site.name=shippers/*/sites/*}\x12\x81\x01\n" +
+	"UpdateSite\x12(.einride.onboarding.v1.UpdateSiteRequest\x1a\x1b.einride.onboarding.v1.Site\"\xb5\x01\xdaA\x10site,update_mask\x82\xb8bn\n" +
+	"\x14freight.sites.update\x1aV\n" +
+	"\x1ftest(caller, request.site.name)\x1a3The caller must have permission to update the site.\x82\xd3\xe4\x93\x02*:\x04site2\"/v1/{site.name=shippers/*/sites/*}\x12\xef\x01\n" +
 	"\n" +
-	"DeleteSite\x12(.einride.onboarding.v1.DeleteSiteRequest\x1a\x1b.einride.onboarding.v1.Site\",\xdaA\x04name\x82\xd3\xe4\x93\x02\x1f*\x1d/v1/{name=shippers/*/sites/*}\x12\x9a\x01\n" +
-	"\rBatchGetSites\x12+.einride.onboarding.v1.BatchGetSitesRequest\x1a,.einride.onboarding.v1.BatchGetSitesResponse\".\x82\xd3\xe4\x93\x02(\x12&/v1/{parent=shippers/*}/sites:batchGet\x12\x8b\x01\n" +
-	"\vGetShipment\x12).einride.onboarding.v1.GetShipmentRequest\x1a\x1f.einride.onboarding.v1.Shipment\"0\xdaA\x04name\x82\xd3\xe4\x93\x02#\x12!/v1/{name=shippers/*/shipments/*}\x12\x9e\x01\n" +
-	"\rListShipments\x12+.einride.onboarding.v1.ListShipmentsRequest\x1a,.einride.onboarding.v1.ListShipmentsResponse\"2\xdaA\x06parent\x82\xd3\xe4\x93\x02#\x12!/v1/{parent=shippers/*}/shipments\x12\xa6\x01\n" +
-	"\x0eCreateShipment\x12,.einride.onboarding.v1.CreateShipmentRequest\x1a\x1f.einride.onboarding.v1.Shipment\"E\xdaA\x0fparent,shipment\x82\xd3\xe4\x93\x02-:\bshipment\"!/v1/{parent=shippers/*}/shipments\x12\xb4\x01\n" +
-	"\x0eUpdateShipment\x12,.einride.onboarding.v1.UpdateShipmentRequest\x1a\x1f.einride.onboarding.v1.Shipment\"S\xdaA\x14shipment,update_mask\x82\xd3\xe4\x93\x026:\bshipment2*/v1/{shipment.name=shippers/*/shipments/*}\x12\x91\x01\n" +
-	"\x0eDeleteShipment\x12,.einride.onboarding.v1.DeleteShipmentRequest\x1a\x1f.einride.onboarding.v1.Shipment\"0\xdaA\x04name\x82\xd3\xe4\x93\x02#*!/v1/{name=shippers/*/shipments/*}B\x8b\x02\n" +
+	"DeleteSite\x12(.einride.onboarding.v1.DeleteSiteRequest\x1a\x1b.einride.onboarding.v1.Site\"\x99\x01\xdaA\x04name\x82\xb8bi\n" +
+	"\x14freight.sites.delete\x1aQ\n" +
+	"\x1atest(caller, request.name)\x1a3The caller must have permission to delete the site.\x82\xd3\xe4\x93\x02\x1f*\x1d/v1/{name=shippers/*/sites/*}\x12\x8b\x03\n" +
+	"\rBatchGetSites\x12+.einride.onboarding.v1.BatchGetSitesRequest\x1a,.einride.onboarding.v1.BatchGetSitesResponse\"\x9e\x02\x82\xb8b\xeb\x01\n" +
+	"\x11freight.sites.get\x1a\xd5\x01\n" +
+	"?test(caller, request.parent) || test_all(caller, request.names)\x1a\x91\x01The caller must have permission to get all sites under the parent shipper, or the caller must have permission to get each of the requested sites.\x82\xd3\xe4\x93\x02(\x12&/v1/{parent=shippers/*}/sites:batchGet\x12\xe2\x03\n" +
+	"\vGetShipment\x12).einride.onboarding.v1.GetShipmentRequest\x1a\x1f.einride.onboarding.v1.Shipment\"\x86\x03\xdaA\x04name\x82\xb8b\xd1\x02\n" +
+	"\x15freight.shipments.get\"\xb7\x02\n" +
+	"Qtest_any(caller, [request.name, response.origin_site, response.destination_site])\x1a\xe1\x01The caller must have permission to get the shipment, or the caller must have permission to get shipments from the shipment's origin site, or the caller must have permission to get shipments to the shipment's destination site.\x82\xd3\xe4\x93\x02#\x12!/v1/{name=shippers/*/shipments/*}\x12\xad\x02\n" +
+	"\rListShipments\x12+.einride.onboarding.v1.ListShipmentsRequest\x1a,.einride.onboarding.v1.ListShipmentsResponse\"\xc0\x01\xdaA\x06parent\x82\xb8b\x89\x01\n" +
+	"\x16freight.shipments.list\x1ao\n" +
+	"\x1ctest(caller, request.parent)\x1aOThe caller must have permission to list all shipments under the parent shipper.\x82\xd3\xe4\x93\x02#\x12!/v1/{parent=shippers/*}/shipments\x12\xb1\x04\n" +
+	"\x0eCreateShipment\x12,.einride.onboarding.v1.CreateShipmentRequest\x1a\x1f.einride.onboarding.v1.Shipment\"\xcf\x03\xdaA\x0fparent,shipment\x82\xb8b\x85\x03\n" +
+	"\x18freight.shipments.create\x1a\xe8\x02\n" +
+	"ctest_any(caller, [request.parent, request.shipment.origin_site, request.shipment.destination_site])\x1a\x80\x02The caller must have permission to create shipments under the parent shipper, or the caller must have permission to create shipments from the shipment's origin site, or the caller must have permission to create shipments to the shipment's destination site.\x82\xd3\xe4\x93\x02-:\bshipment\"!/v1/{parent=shippers/*}/shipments\x12\xd4\x01\n" +
+	"\x0eUpdateShipment\x12,.einride.onboarding.v1.UpdateShipmentRequest\x1a\x1f.einride.onboarding.v1.Shipment\"s\xdaA\x14shipment,update_mask\x82\xb8b\x1c\n" +
+	"\x18freight.shipments.update(\x01\x82\xd3\xe4\x93\x026:\bshipment2*/v1/{shipment.name=shippers/*/shipments/*}\x12\x87\x02\n" +
+	"\x0eDeleteShipment\x12,.einride.onboarding.v1.DeleteShipmentRequest\x1a\x1f.einride.onboarding.v1.Shipment\"\xa5\x01\xdaA\x04name\x82\xb8bq\n" +
+	"\x18freight.shipments.delete\x1aU\n" +
+	"\x1atest(caller, request.name)\x1a7The caller must have permission to delete the shipment.\x82\xd3\xe4\x93\x02#*!/v1/{name=shippers/*/shipments/*}\x1a\x80\x05\x8a\xb8b\xfb\x04\n" +
+	"S\n" +
+	"\x13roles/freight.admin\x12\rFreight Admin\x1a\"Full admin permissions to freight.:\tfreight.*\n" +
+	"\xd9\x02\n" +
+	"\x14roles/freight.editor\x12\x0eFreight Editor\x1a\x1cEdit permissions to freight.:\x14freight.shippers.get:\x17freight.shippers.update:\x11freight.sites.get:\x12freight.sites.list:\x14freight.sites.create:\x14freight.sites.update:\x14freight.sites.delete:\x15freight.shipments.get:\x16freight.shipments.list:\x18freight.shipments.create:\x18freight.shipments.update:\x18freight.shipments.delete\n" +
+	"\xc7\x01\n" +
+	"\x14roles/freight.viewer\x12\x0eFreight Viewer\x1a\x1cView permissions to freight.:\x14freight.shippers.get:\x15freight.shippers.list:\x11freight.sites.get:\x12freight.sites.list:\x15freight.shipments.get:\x16freight.shipments.listB\x8b\x02\n" +
 	"\x19com.einride.onboarding.v1B\x12FreighServiceProtoP\x01Zdgithub.com/giovanniberi93/einride-backend-onboarding/proto/gen/go/einride/onboarding/v1;onboardingv1\xa2\x02\x03EOX\xaa\x02\x15Einride.Onboarding.V1\xca\x02\x15Einride\\Onboarding\\V1\xe2\x02!Einride\\Onboarding\\V1\\GPBMetadata\xea\x02\x17Einride::Onboarding::V1b\x06proto3"
 
 var (
