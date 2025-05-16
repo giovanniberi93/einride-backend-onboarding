@@ -6,6 +6,7 @@ import (
 	"go.einride.tech/sage/sg"
 	"go.einride.tech/sage/sgtool"
 	"go.einride.tech/sage/tools/sgbuf"
+	"go.einride.tech/sage/tools/sgprotocgengogrpc"
 )
 
 type Proto sg.Namespace
@@ -17,7 +18,7 @@ func (Proto) Default(ctx context.Context) error {
 }
 
 func (Proto) BufGenerate(ctx context.Context) error {
-	sg.Deps(ctx, Proto.ProtocGenGo)
+	sg.Deps(ctx, Proto.ProtocGenGo, sgprotocgengogrpc.PrepareCommand)
 	sg.Logger(ctx).Println("generating proto stubs...")
 	cmd := sgbuf.Command(ctx, "generate", "--output", sg.FromGitRoot(), "--template", "buf.gen.yaml", "--path", "einride")
 	cmd.Dir = sg.FromGitRoot("proto")

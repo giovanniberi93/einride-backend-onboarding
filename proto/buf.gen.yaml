@@ -11,3 +11,9 @@ plugins:
   - name: go
     out: proto/gen/go
     opt: module=github.com/giovanniberi93/einride-backend-onboarding/proto/gen/go
+
+  - name: go-grpc
+    out: proto/gen/go
+    opt:
+      - module=github.com/giovanniberi93/einride-backend-onboarding/proto/gen/go
+      - require_unimplemented_servers=false
