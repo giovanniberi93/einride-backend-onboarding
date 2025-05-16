@@ -83,6 +83,10 @@ go-mod-tidy: $(sagefile)
 go-test: $(sagefile)
 	@$(sagefile) GoTest
 
+.PHONY: run
+run: $(sagefile)
+	@$(sagefile) Run
+
 .PHONY: spanner-generate
 spanner-generate: $(sagefile)
 	@$(sagefile) SpannerGenerate

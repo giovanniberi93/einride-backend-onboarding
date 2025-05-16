@@ -39,6 +39,12 @@ func Default(ctx context.Context) error {
 	return nil
 }
 
+func Run(ctx context.Context) error {
+	cmd := sg.Command(ctx, "go", "run", "./cmd/server", "-config", "config/local.yaml")
+	cmd.Dir = sg.FromGitRoot()
+	return cmd.Run()
+}
+
 func SpannerGenerate(ctx context.Context) error {
 	sg.Logger(ctx).Println("generating Spanner code...")
 	cmd := sg.Command(ctx, "go", "run", "go.einride.tech/spanner-aip", "generate")
