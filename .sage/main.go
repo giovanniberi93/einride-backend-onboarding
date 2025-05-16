@@ -31,11 +31,19 @@ func Default(ctx context.Context) error {
 	sg.Deps(ctx, ConvcoCheck)
 	sg.Deps(ctx, FormatMarkdown, FormatYaml)
 	sg.Deps(ctx, Proto.Default)
+	sg.Deps(ctx, SpannerGenerate)
 	sg.Deps(ctx, GoLint)
 	sg.Deps(ctx, GoTest)
 	sg.Deps(ctx, GoModTidy)
 	sg.Deps(ctx, GitVerifyNoDiff)
 	return nil
+}
+
+func SpannerGenerate(ctx context.Context) error {
+	sg.Logger(ctx).Println("generating Spanner code...")
+	cmd := sg.Command(ctx, "go", "run", "go.einride.tech/spanner-aip", "generate")
+	cmd.Dir = sg.FromGitRoot()
+	return cmd.Run()
 }
 
 func GoModTidy(ctx context.Context) error {

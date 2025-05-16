@@ -1,0 +1,7 @@
+databases:
+  - name: onboarding
+    schema:
+      - "db/migrations/*.up.sql"
+    package:
+      name: onboardingdb
+      path: ./internal/gen/onboardingdb

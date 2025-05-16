@@ -83,6 +83,10 @@ go-mod-tidy: $(sagefile)
 go-test: $(sagefile)
 	@$(sagefile) GoTest
 
+.PHONY: spanner-generate
+spanner-generate: $(sagefile)
+	@$(sagefile) SpannerGenerate
+
 .PHONY: proto
 proto:
 	$(MAKE) -C proto -f Makefile
