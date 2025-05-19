@@ -8,14 +8,16 @@ package server
 
 import (
 	"context"
+	"github.com/giovanniberi93/einride-backend-onboarding/internal/svc/freightsvc"
 )
 
 // Injectors from wire.go:
 
 func Init(contextContext context.Context, config *Config) (*App, func(), error) {
-	server := initGRPCServer(contextContext)
+	server := &freightsvc.Server{}
+	grpcServer := initGRPCServer(contextContext, server)
 	app := &App{
-		GRPCServer: server,
+		GRPCServer: grpcServer,
 	}
 	return app, func() {
 	}, nil
