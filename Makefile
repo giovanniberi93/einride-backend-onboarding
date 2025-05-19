@@ -67,6 +67,10 @@ git-verify-no-diff: $(sagefile)
 go-format: $(sagefile)
 	@$(sagefile) GoFormat
 
+.PHONY: go-generate
+go-generate: $(sagefile)
+	@$(sagefile) GoGenerate
+
 .PHONY: go-lint
 go-lint: $(sagefile)
 	@$(sagefile) GoLint
@@ -90,6 +94,10 @@ run: $(sagefile)
 .PHONY: spanner-generate
 spanner-generate: $(sagefile)
 	@$(sagefile) SpannerGenerate
+
+.PHONY: wire-generate
+wire-generate: $(sagefile)
+	@$(sagefile) WireGenerate
 
 .PHONY: proto
 proto:

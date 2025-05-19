@@ -4,6 +4,7 @@ go 1.24.3
 
 require (
 	cloud.google.com/go/spanner v1.81.0
+	github.com/google/wire v0.6.0
 	go.einride.tech/cloudrunner v0.86.0
 	go.einride.tech/iam v0.56.1
 	go.einride.tech/spanner-aip v0.67.0
